@@ -1,0 +1,62 @@
+---
+title: "Codebook"
+author: "Jesus Ortiz"
+date: "2023-08-06"
+output: html_document
+---
+
+# Code Book
+
+The `run_analysis.R` script performs data preparation and follows the five steps required as described in the course project’s definition.
+
+## Step 1: Download the dataset
+
+The script downloads the dataset from the URL provided and extracts it into a folder called "UCI HAR Dataset."
+
+## Step 2: Assign each data to variables
+
+The script reads various text files from the dataset and assigns them to variables:
+
+- `features`: A data frame with 561 rows and 2 columns representing the features (variables) used in the dataset.
+- `activities`: A data frame with 6 rows and 2 columns containing activity labels and their corresponding codes.
+- `subject_test`: A data frame with 2947 rows and 1 column containing test data of 9/30 volunteer test subjects being observed.
+- `x_test`: A data frame with 2947 rows and 561 columns containing recorded features test data.
+- `y_test`: A data frame with 2947 rows and 1 column containing test data of activities' code labels.
+- `subject_train`: A data frame with 7352 rows and 1 column containing train data of 21/30 volunteer subjects being observed.
+- `x_train`: A data frame with 7352 rows and 561 columns containing recorded features train data.
+- `y_train`: A data frame with 7352 rows and 1 column containing train data of activities' code labels.
+
+## Step 3: Merge the training and test sets to create one data set
+
+The script combines the training and test datasets for subjects (`subject`), activities (`y`), and recorded features (`x`) to create a single data set named `merged_data`.
+
+## Step 4: Extract only the measurements on the mean and standard deviation for each measurement
+
+The script subsets the `merged_data` to create a new data frame called `tidy_data`. It selects only the columns related to subject, activity, and the measurements on the mean and standard deviation for each measurement.
+
+## Step 5: Use descriptive activity names to name the activities in the data set
+
+The script replaces the activity codes in the `tidy_data` with descriptive activity names taken from the `activities` data frame.
+
+## Step 6: Appropriately label the data set with descriptive variable names
+
+The script renames the columns in the `tidy_data` data frame with descriptive variable names:
+
+- Replacing "Acc" with "Accelerometer"
+- Replacing "Gyro" with "Gyroscope"
+- Replacing "BodyBody" with "Body"
+- Replacing "Mag" with "Magnitude"
+- Adding "Frequency" to columns starting with "f"
+- Adding "Time" to columns starting with "t"
+- Replacing "-mean()" with "mean" (ignoring case)
+- Replacing "-std()" with "std" (ignoring case)
+
+## Step 7: Create a new tidy data set with the average of each variable for each activity and subject
+
+The script creates a final tidy data set named `final_data` by summarizing the `tidy_data`. It calculates the means of each variable for each activity and subject, after grouping by subject and activity.
+
+## Step 8: Export the final tidy data set
+
+The script exports the `final_data` into a text file named "final_data.txt" without row names.
+
+The resulting `final_data` data frame contains 180 rows and 88 columns, representing the average of each variable for each activity and subject. The columns are named descriptively based on the provided instructions in the script.
